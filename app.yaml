@@ -1,0 +1,29 @@
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+builtins:
+- deferred: on
+
+handlers:
+- url: /_ah/queue/deferred
+  script: google.appengine.ext.deferred.deferred.application
+  login: admin
+- url: .*
+  script: core.app
+  secure: always
+
+libraries:
+# To talk to Slack
+- name: ssl
+  version: latest
+# To parse secrets.yaml
+- name: yaml
+  version: latest
+
+# Don't upload big things
+skip_files:
+- .*AllSets\..*
+- .*\.zip$
+- .*\.pyc$
+- ^(.*/)?.git/.*
