@@ -1,4 +1,4 @@
-import data
+from datetime import datetime, timedelta
 import flask
 from google.appengine.ext.deferred import defer
 import logging
@@ -27,6 +27,12 @@ secrets = Delay(data.load_secrets)
 def card_image_url(card):
     return ("http://gatherer.wizards.com/Handlers/Image.ashx"
             "?multiverseid=%s&type=card") % card['multiverseid']
+
+
+def card_usage_ok(card_usage):
+    """Has this card been used in the past 30 days?"""
+    return (card_usage == None or
+            card_usage.last_usage < (datetime.now() - timedelta(days=30)))
 
 
 def find_card(text):

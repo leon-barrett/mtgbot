@@ -1,4 +1,6 @@
 import cPickle as pickle
+from datetime import datetime
+from google.appengine.ext import ndb
 import json
 import re
 import yaml
@@ -65,6 +67,21 @@ def load_cards():
 def load_regex():
     with open(REGEX_FILENAME) as f:
         return pickle.load(f)
+
+
+class CardUsage(ndb.Model):
+    name = ndb.StringProperty()
+    last_usage = ndb.DateTimeProperty()
+
+
+def get_card_usage(card_names):
+    return ndb.get_multi([ndb.Key(name) for name in card_names])
+
+
+def note_card_usage(card_name):
+    card_usage = CardUsage(name=card_name, last_usage=datetime.now(),
+                           id=card_name)
+    card_usage.put()
 
 
 if __name__ == '__main__':
