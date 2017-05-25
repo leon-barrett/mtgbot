@@ -9,6 +9,8 @@ CARDS_FILENAME = "cards.pickle"
 REGEX_FILENAME = "regex.pickle"
 SECRETS_FILENAME = "secrets.yaml"
 
+blacklist = set(['who', 'what', 'when', 'where', 'why'])
+
 
 def preprocess_cards(all_sets_filename, cards_filename):
     with open(all_sets_filename) as f:
@@ -19,8 +21,9 @@ def preprocess_cards(all_sets_filename, cards_filename):
                     key=lambda x: x['releaseDate'], reverse=True):
         for card in s['cards']:
             for name in card.get('names', [card['name']]):
-                if 'multiverseid' in card:
-                    cards[name.lower()] = {'multiverseid': card['multiverseid']}
+                name = name.lower()
+                if 'multiverseid' in card and name not in blacklist:
+                    cards[name] = {'multiverseid': card['multiverseid']}
     with open(cards_filename, 'w') as f:
         pickle.dump(cards, f, pickle.HIGHEST_PROTOCOL)
     return cards
