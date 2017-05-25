@@ -2,3 +2,4 @@
 AllSets*
 lib/
 *.pickle
+secrets.yaml

@@ -19,7 +19,8 @@ to official Magic card images.
 # Setup
 
 1. [Tell Slack about your bot](https://api.slack.com/apps/).
-2. Put the secret keys you got from Slack into `secrets.yaml`.
+2. Put the secret keys you got from Slack into `secrets.yaml.EDIT_ME` (and
+   rename it to `secrets.yaml`).
 3. Run `setup.sh`. (Use `pip` to install Python dependencies if needed.)
 4. [Set up a Google Cloud Services account](https://cloud.google.com/).
 5. [Install Google Cloud Services command-line tool](https://cloud.google.com/sdk/gcloud/).
